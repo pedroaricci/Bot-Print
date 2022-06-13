@@ -1,0 +1,42 @@
+import time
+import selenium
+import autoit
+import pyscreenshot as ImageGrab
+import schedule
+
+from selenium import webdriver
+from datetime import datetime
+from time import sleep
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+def take_screenshot1():
+    print("Taking screenshot...")
+
+    image_name = f"screenshot-{str(datetime.now())}"
+    driver = webdriver.Firefox()
+    driver.get('link')
+    autoit.win_wait_active("",30)
+    autoit.send("USER{TAB}")
+    autoit.send("SENHA{Enter}")
+    sleep(10)
+    
+    driver.get_screenshot_as_file("imagem-1.png")
+    driver.quit()
+
+    print("Screenshot taken...")
+
+def main():
+    schedule.every(5).seconds.do(take_screenshot1)
+    sleep(5)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(10)
+
+
+if __name__ == '__main__':
+    main()
